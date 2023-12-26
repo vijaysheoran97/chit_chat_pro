@@ -108,7 +108,7 @@ class _LoginScreenState extends State<LoginScreen> {
               child: ElevatedButton.icon(
                   style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.greenAccent,
-                      shape: StadiumBorder(),
+                      shape: const StadiumBorder(),
                       elevation: 1),
                   onPressed: () {
                     _handleGoogleBtnClick();
