@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Dialogs {
@@ -6,12 +5,12 @@ class Dialogs {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(msg),
         backgroundColor: Colors.blue.withOpacity(.8),
-        behavior: SnackBarBehavior.floating));
+        behavior: SnackBarBehavior.floating,),);
   }
 
   static void showProgressBar(BuildContext context) {
     showDialog(
         context: context,
-        builder: (_) => const Center(child: CircularProgressIndicator()));
+        builder: (_) => const Center(child: CircularProgressIndicator(),),);
   }
 }
