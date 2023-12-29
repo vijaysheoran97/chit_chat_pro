@@ -7,6 +7,7 @@ import 'package:chit_chat_pro/api/api.dart';
 import 'package:chit_chat_pro/helper/my_date_util.dart';
 import 'package:chit_chat_pro/models/chat_user.dart';
 import 'package:chit_chat_pro/models/message.dart';
+import 'package:chit_chat_pro/screens/view_profile_screen.dart';
 import 'package:chit_chat_pro/widgets/message_card.dart';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/cupertino.dart';
@@ -126,7 +127,14 @@ class _ChatScreenState extends State<ChatScreen> {
 
   Widget _appBar() {
     return InkWell(
-        onTap: () {},
+        onTap: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (_) => ViewProfileScreen(
+                        user: widget.user,
+                      )));
+        },
         child: StreamBuilder(
             stream: APIs.getUserInfo(widget.user),
             builder: (context, snapshot) {

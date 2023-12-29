@@ -4,6 +4,7 @@ import 'package:chit_chat_pro/main.dart';
 import 'package:chit_chat_pro/models/chat_user.dart';
 import 'package:chit_chat_pro/models/message.dart';
 import 'package:chit_chat_pro/screens/chat_screen.dart';
+import 'package:chit_chat_pro/widgets/dialogs/profile_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -43,14 +44,23 @@ class _ChatUserCardState extends State<ChatUserCard> {
               if (list.isNotEmpty) _message = list[0];
 
               return ListTile(
-                leading: ClipRRect(
-                  borderRadius: BorderRadius.circular(mq.height * .03),
-                  child: CachedNetworkImage(
-                    // width: mq.height * 0.55,
-                    // height: mq.height * 0.55,
-                    imageUrl: widget.user.image,
-                    errorWidget: (context, url, error) => const CircleAvatar(
-                      child: Icon(CupertinoIcons.person),
+                leading: InkWell(
+                  onTap: () {
+                    showDialog(
+                        context: context,
+                        builder: (_) => ProfileDialog(
+                              user: widget.user,
+                            ));
+                  },
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(mq.height * .03),
+                    child: CachedNetworkImage(
+                      // width: mq.height * 0.55,
+                      // height: mq.height * 0.55,
+                      imageUrl: widget.user.image,
+                      errorWidget: (context, url, error) => const CircleAvatar(
+                        child: Icon(CupertinoIcons.person),
+                      ),
                     ),
                   ),
                 ),

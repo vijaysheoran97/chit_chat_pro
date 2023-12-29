@@ -1,7 +1,6 @@
 
 
 import 'dart:developer';
-
 import 'package:chit_chat_pro/api/api.dart';
 import 'package:chit_chat_pro/main.dart';
 import 'package:chit_chat_pro/models/chat_user.dart';
@@ -28,11 +27,18 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     APIs.getSelfInfo();
-    APIs.updateActiveStatus(true);
+    // APIs.updateActiveStatus(true);
     SystemChannels.lifecycle.setMessageHandler((message) {
       log('Message: $message');
-      if(message.toString().contains('resume'))APIs.updateActiveStatus(true);
-      if(message.toString().contains('pause'))APIs.updateActiveStatus(false);
+      if(APIs.auth.currentUser !=null){
+        if(message.toString().contains('resume')) {
+          APIs.updateActiveStatus(true);
+        }
+        if(message.toString().contains('pause')) {
+          APIs.updateActiveStatus(false);
+        }
+      }
+
       return Future.value(message);
     });
   }
@@ -66,7 +72,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     onChanged: (val) {
                       //search logic
                       _searchList.clear();
-
                       for (var i in _list) {
                         if (i.name.toLowerCase().contains(val.toLowerCase()) ||
                             i.email.toLowerCase().contains(val.toLowerCase())) {
@@ -140,11 +145,14 @@ class _HomeScreenState extends State<HomeScreen> {
                               user:
                                   _isSearching ? _searchList[index] : _list[index]);
                           // return Text('Name: ${list[index]}');
-                        });
+                        }
+                        );
                   } else {
                     return const Center(
                         child: Text('No Connections Found!',
-                            style: TextStyle(fontSize: 20)));
+                            style: TextStyle(fontSize: 20),
+                        ),
+                    );
                   }
               }
             },

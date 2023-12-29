@@ -1,12 +1,12 @@
 import 'dart:developer';
 import 'dart:io';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chit_chat_pro/api/api.dart';
 import 'package:chit_chat_pro/helper/dialogs.dart';
 import 'package:chit_chat_pro/main.dart';
 import 'package:chit_chat_pro/models/chat_user.dart';
 import 'package:chit_chat_pro/screens/auth/login_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -20,7 +20,6 @@ class ProfileScreen extends StatefulWidget {
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
-
 class _ProfileScreenState extends State<ProfileScreen> {
   final _formkey = GlobalKey<FormState>();
   String? _image;
@@ -43,10 +42,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
               backgroundColor: Colors.redAccent,
               onPressed: () async {
                 Dialogs.showProgressBar(context);
+
+                await APIs.updateActiveStatus(false);
+
                 await APIs.auth.signOut().then((value) async {
                   await GoogleSignIn().signOut().then((value) {
                     Navigator.pop(context);
                     Navigator.pop(context);
+                    APIs.auth = FirebaseAuth.instance;
                     Navigator.pushReplacement(context,
                         MaterialPageRoute(builder: (_) => const LoginScreen()));
                   });
