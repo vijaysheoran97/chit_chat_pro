@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
@@ -277,7 +276,13 @@ class _ChatScreenState extends State<ChatScreen> {
           MaterialButton(
             onPressed: () {
               if (_textController.text.isNotEmpty) {
-                APIs.sendMessage(widget.user, _textController.text, Type.text);
+                if (_list.isEmpty) {
+                  APIs.sendFirstMessage(
+                      widget.user, _textController.text, Type.text);
+                } else {
+                  APIs.sendMessage(
+                      widget.user, _textController.text, Type.text);
+                }
                 _textController.text = '';
               }
             },
@@ -297,21 +302,3 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 }
-
-// _list.clear();
-// _list.add(Message(
-// toId: 'xyz',
-// msg: 'hii',
-// read: '',
-// type: Type.text,
-// fromId: APIs.user.uid,
-// sent: '12:00 AM'
-// ));
-// _list.add(Message(
-// toId: APIs.user.uid,
-// msg: 'Hello',
-// read: '',
-// type: Type.text,
-// fromId: 'xyz',
-// sent: '12:05 AM'
-// ));

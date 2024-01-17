@@ -1,7 +1,11 @@
+import 'dart:developer';
+
 import 'package:chit_chat_pro/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_notification_channel/flutter_notification_channel.dart';
+import 'package:flutter_notification_channel/notification_importance.dart';
 import 'firebase_options.dart';
 
 late Size mq;
@@ -42,6 +46,12 @@ class MyApp extends StatelessWidget {
 
 _initializeFirbase() async {
   await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+    options: DefaultFirebaseOptions.currentPlatform,);
+
+  var result = await FlutterNotificationChannel.registerNotificationChannel(
+      id: 'chats',
+      name: 'Chats',
+      description: 'For Showing Message Notification',
+      importance: NotificationImportance.IMPORTANCE_HIGH);
+  log('\nNotification Channel Result: $result');
 }
